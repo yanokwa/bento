@@ -31,11 +31,13 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "output_directory": "../builds/packer-{{user `template`}}-virtualbox",
       "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -hP now",
+      "post_shutdown_delay": "30s",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
+      "format": "ova",
       "vboxmanage": [
         [
           "modifyvm",
@@ -51,12 +53,6 @@
         ]
       ],
       "vboxmanage_post": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--nic1",
-          "{{ user `networking` }}"
-        ],
         [
           "modifyvm",
           "{{.Name}}",

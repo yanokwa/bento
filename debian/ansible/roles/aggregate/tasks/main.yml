@@ -13,6 +13,7 @@
     aggregate_installer: ODK-Aggregate-Linux-v1.4.15.run
     aggregate_install_dir: /tmp/ODK Aggregate
     tomcat_root_dir: /var/lib/tomcat8/webapps/ROOT
+    motd_dir: /etc/update-motd.d
 
 - name: copy installer
   copy: 
@@ -59,3 +60,14 @@
   with_items:
     - security.properties
     - jdbc.properties
+
+- name: Clean existing motd scripts
+  file:
+    state: absent
+    path: "{{ motd_dir }}/"
+
+- name: copy motd scripts
+  copy:
+    src: 'motd/'
+    dest: '{{ motd_dir }}'
+    mode: 0755
